@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaynak Saç | SALON RUJ</title>
+    <meta name="description" content="Kaynak Saç Uygulamaları">
+    <link rel="stylesheet" href="style.css?v=8">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header scrolled" id="header" style="background: rgba(10, 10, 10, 0.95);">
+        <div class="container header-content">
+            <a href="index.html" class="custom-logo">
+                <div class="logo-top">SALON<span style="color: #ffffff; margin-left:8px;">RU</span><span class="logo-j" style="color: #ffffff;">J</span></div>
+                <div class="logo-bottom">
+                    <span class="logo-line"></span>
+                    <span class="logo-subtitle">saç <span class="fancy-amp">&</span> sanat</span>
+                    <span class="logo-line"></span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <div class="nav-dropdown">
+                    <button class="dropbtn"><span data-i18n="nav_services">Hizmetlerimiz</span> <i data-lucide="chevron-down" style="width:14px; height:14px; margin-left: 4px;"></i></button>
+                    <div class="nav-dropdown-content">
+                        <a href="ombre.html" data-i18n="service_ombre">Ombre</a>
+                        <a href="sombre.html" data-i18n="service_sombre">Sombre</a>
+                        <a href="kaynak.html" data-i18n="service_extensions">Kaynak Saç</a>
+                        <a href="brazilian-blow.html" data-i18n="service_brazilian">Brazilian Blow</a>
+                        <a href="kesim.html" data-i18n="service_haircut">Kesim</a>
+                    </div>
+                </div>
+                <a href="index.html#detaylar" data-i18n="nav_about">Hakkımızda</a>
+                <a href="index.html#sonuclar" data-i18n="nav_results">Sonuçlar</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="https://wa.me/905541967090" class="btn-nav btn-wa" target="_blank">
+                    <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i> WhatsApp
+                </a>
+                <a href="https://www.instagram.com/salonrujkayseri/" class="btn-nav btn-ig" target="_blank">
+                    <i data-lucide="instagram" style="width: 16px; height: 16px;"></i> Instagram
+                </a>
+                <a href="index.html#iletisim" class="btn btn-primary" style="padding: 0.6rem 1.75rem; font-size: 0.8rem; margin-left: 0.5rem; letter-spacing: 2px; border-radius: 50px;" data-i18n="nav_contact">İletişim</a>
+                <select id="lang-select" class="lang-select" style="margin-left: 1rem; padding: 0.4rem; border-radius: 50px; border: 1px solid var(--color-primary); background: transparent; color: var(--color-primary); font-family: 'Inter', sans-serif; cursor: pointer; outline: none; font-size: 0.8rem; font-weight: 500;">
+                    <option value="tr">TR</option>
+                    <option value="en">EN</option>
+                    <option value="de">DE</option>
+                    <option value="ru">RU</option>
+                </select>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-close" id="mobile-menu-close">
+            <i data-lucide="x"></i>
+        </div>
+        <details style="margin-bottom: 0;">
+            <summary class="mobile-link" style="display:flex; justify-content:space-between; align-items:center; list-style: none; cursor: pointer;">
+                <span data-i18n="nav_services">Hizmetlerimiz</span> <i data-lucide="chevron-down"></i>
+            </summary>
+            <div style="padding-left: 1rem; border-left: 2px solid var(--color-primary); margin-left: 1rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="ombre.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_ombre">Ombre</a>
+                <a href="sombre.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_sombre">Sombre</a>
+                <a href="kaynak.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_extensions">Kaynak Saç</a>
+                <a href="brazilian-blow.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_brazilian">Brazilian Blow</a>
+                <a href="kesim.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_haircut">Kesim</a>
+            </div>
+        </details>
+        <a href="index.html#detaylar" class="mobile-link" data-i18n="nav_about">Hakkımızda</a>
+        <a href="index.html#sonuclar" class="mobile-link" data-i18n="nav_results">Sonuçlar</a>
+        <a href="https://www.instagram.com/salonrujkayseri/" class="mobile-link" target="_blank" style="color: #E1306C;"><i data-lucide="instagram" style="margin-right:0.5rem; vertical-align:middle;"></i>Instagram</a>
+        <a href="https://wa.me/905541967090" class="btn btn-whatsapp mobile-btn" target="_blank" style="margin-top: 1rem;">
+            <i data-lucide="message-circle"></i> <span data-i18n="btn_whatsapp">WhatsApp'tan Yazın</span>
+        </a>
+        <div style="margin-top: 1.5rem; padding-left: 1.5rem;">
+            <select id="mobile-lang-select" class="lang-select" style="padding: 0.5rem; border-radius: 5px; border: 1px solid var(--color-primary); background: transparent; color: var(--color-text); font-family: 'Inter', sans-serif; cursor: pointer; outline: none;">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="service-main" style="background-color: var(--color-bg-light); min-height: 100vh;">
+        <div class="container animate-on-scroll">
+            <span class="badge" style="background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); margin-bottom: 1.5rem; padding: 0.4rem 1rem; font-size: 0.8rem;" data-i18n="service_badge">İmza Hizmetimiz</span>
+            <h1 class="section-title" style="font-size: 3.5rem; margin-bottom: 2rem;" data-i18n="kaynak_title">Kaynak Saç</h1>
+            <div class="divider"></div>
+            
+            <div style="font-size: 1.1rem; color: var(--color-text-muted); line-height: 1.8; max-width: 800px; margin-bottom: 4rem;">
+                <!-- Kaynak Saç Nedir? -->
+                <h3 style="color: var(--color-text-main); font-size: 1.5rem; margin-bottom: 1rem;" data-i18n="kaynak_h1">Kaynak Saç Nedir?</h3>
+                <p data-i18n="kaynak_p1">Kaynak saç, mevcut saçlarınıza ek saç tutamları ekleyerek saçlarınızı uzatmanıza veya daha dolgun hale getirmenize olanak tanıyan bir yöntemdir. Kullanılan saçlar, genellikle %100 doğal insan saçı olup, kendi saçınıza uyum sağlayacak şekilde seçilir ve profesyonelce uygulanır. Bu sayede, saçlarınız doğal görünümünden hiçbir şey kaybetmeden, istediğiniz uzunluk ve hacme ulaşır.</p>
+
+                <!-- Yöntemler -->
+                <h3 style="color: var(--color-text-main); font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;" data-i18n="kaynak_h2">Kaynak Saç Yöntemleri</h3>
+                <p data-i18n="kaynak_p2">RUJ KUAFÖR'de, saç yapınıza ve tercihlerinize en uygun kaynak saç yöntemini belirleyerek uyguluyoruz. En sık tercih edilen kaynak saç yöntemleri şunlardır:</p>
+                <ul style="margin-top: 1rem; margin-bottom: 1rem; padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li data-i18n="kaynak_li1"><strong>Keratin Kaynak:</strong> Saç tutamlarının keratin bazlı bir yapıştırıcı ile kendi saçınıza eklenmesi işlemidir. Doğal ve uzun ömürlü bir yöntemdir.</li>
+                    <li data-i18n="kaynak_li2"><strong>Mikro Kaynak:</strong> Çok ince saç tutamlarının saç diplerinize mikro halkalarla eklenmesi işlemidir. İnce saçlar için ideal bir yöntemdir.</li>
+                    <li data-i18n="kaynak_li3"><strong>Tress Kaynak:</strong> Saç tutamlarının şeritler halinde dikilerek eklenmesi işlemidir. Özellikle yoğun ve hacimli saçlar için tercih edilir.</li>
+                </ul>
+
+                <!-- Neden -->
+                <h3 style="color: var(--color-text-main); font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;" data-i18n="kaynak_h3">Neden Kaynak Saç?</h3>
+                <p data-i18n="kaynak_p3">Kaynak saç, doğal saçlarınızın sağlığını bozmadan, kısa sürede dolgun ve uzun saçlara sahip olmanızı sağlar. İster günlük kullanım için, ister özel günlerinizde dikkat çekici bir görünüm elde etmek için tercih edebilirsiniz. Ayrıca, saçlarınızı uzatmak veya kalınlaştırmak için uzun süre beklemenize gerek kalmaz. SALON RUJ, kaynak saç işlemleri sırasında saçlarınıza zarar vermeden, en doğal ve estetik sonuçları elde ediyoruz.</p>
+
+                <!-- Bakım -->
+                <h3 style="color: var(--color-text-main); font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;" data-i18n="kaynak_h4">Saç Bakımı ve Uzun Ömürlü Kullanım</h3>
+                <p data-i18n="kaynak_p4">Kaynak saç uygulamasından sonra saçlarınızın sağlıklı kalması ve uzun ömürlü olması için düzenli bakım çok önemlidir. SALON RUJ olarak, kaynak saç bakımı konusunda da size gerekli tüm bilgileri ve destekleri sağlıyoruz. Doğru şampuanlar, bakım ürünleri ve şekillendirme yöntemleri ile kaynak saçlarınızın doğal parlaklığını ve hacmini korumanıza yardımcı oluyoruz.</p>
+            </div>
+
+            <h3 class="section-title" style="font-size: 2rem; margin-bottom: 1rem;" data-i18n="kaynak_gallery">Kaynak Saç Çalışmalarımız</h3>
+            
+            <div class="horizontal-gallery dynamic-gallery-container" data-category="kaynak" style="margin-top: 2rem;">
+                <!-- JS tarafından doldurulacak -->
+            </div>
+            
+            <div style="margin-top: 5rem; text-align: center; padding-bottom: 5rem;">
+                <a href="https://wa.me/905541967090" class="btn btn-whatsapp" target="_blank" style="padding: 1rem 2.5rem; font-size: 1rem;">
+                    <i data-lucide="calendar"></i> <span data-i18n="btn_kaynak_apt">Kaynak İçin Randevu Al</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="custom-logo" style="margin-bottom: 1.5rem;">
+                <div class="logo-top" style="color: #fff;">SALON<span style="color: #ffffff; margin-left:8px;">RU</span><span class="logo-j" style="color: #ffffff;">J</span></div>
+                <div class="logo-bottom">
+                    <span class="logo-line" style="background-color: #fff;"></span>
+                    <span class="logo-subtitle" style="color: #fff;">saç <span class="fancy-amp">&</span> sanat</span>
+                    <span class="logo-line" style="background-color: #fff;"></span>
+                </div>
+            </div>
+            <p><a href="admin.html" style="color: inherit; text-decoration: none; cursor: default;" title="">© 2026</a> <span data-i18n="footer_rights">SALON RUJ - Tüm hakları saklıdır.</span></p>
+        </div>
+    </footer>
+
+    
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALON RUJ | Premium Hizmetler</title>
+    <meta name="description" content="Saçınızda yepyeni dokunuşlar. Premium salon deneyimi.">
+    <link rel="stylesheet" href="style.css?v=8">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <div class="container header-content">
+            <a href="#" class="custom-logo">
+                <div class="logo-top">SALON<span style="color: #ffffff; margin-left:8px;">RU</span><span class="logo-j"
+                        style="color: #ffffff;">J</span></div>
+                <div class="logo-bottom">
+                    <span class="logo-line"></span>
+                    <span class="logo-subtitle">saç sanat</span>
+                    <span class="logo-line"></span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <div class="nav-dropdown">
+                    <button class="dropbtn"><span data-i18n="nav_services">Hizmetlerimiz</span> <i data-lucide="chevron-down" style="width:14px; height:14px; margin-left: 4px;"></i></button>
+                    <div class="nav-dropdown-content">
+                        <a href="ombre.html" data-i18n="service_ombre">Ombre</a>
+                        <a href="sombre.html" data-i18n="service_sombre">Sombre</a>
+                        <a href="kaynak.html" data-i18n="service_extensions">Kaynak Saç</a>
+                        <a href="brazilian-blow.html" data-i18n="service_brazilian">Brazilian Blow</a>
+                        <a href="kesim.html" data-i18n="service_haircut">Kesim</a>
+                    </div>
+                </div>
+                <a href="#detaylar" data-i18n="nav_about">Hakkımızda</a>
+                <a href="#sonuclar" data-i18n="nav_results">Sonuçlar</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="https://wa.me/905541967090" class="btn-nav btn-wa" target="_blank">
+                    <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i> WhatsApp
+                </a>
+                <a href="https://www.instagram.com/salonrujkayseri/" class="btn-nav btn-ig" target="_blank">
+                    <i data-lucide="instagram" style="width: 16px; height: 16px;"></i> Instagram
+                </a>
+                <a href="#iletisim" class="btn btn-primary" style="padding: 0.6rem 1.75rem; font-size: 0.8rem; margin-left: 0.5rem; letter-spacing: 2px; border-radius: 50px;" data-i18n="nav_contact">İletişim</a>
+                <select id="lang-select" class="lang-select" style="margin-left: 1rem; padding: 0.4rem; border-radius: 50px; border: 1px solid var(--color-primary); background: transparent; color: var(--color-primary); font-family: 'Inter', sans-serif; cursor: pointer; outline: none; font-size: 0.8rem; font-weight: 500;">
+                    <option value="tr">TR</option>
+                    <option value="en">EN</option>
+                    <option value="de">DE</option>
+                    <option value="ru">RU</option>
+                </select>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-close" id="mobile-menu-close">
+            <i data-lucide="x"></i>
+        </div>
+        <details style="margin-bottom: 0;">
+            <summary class="mobile-link" style="display:flex; justify-content:space-between; align-items:center; list-style: none; cursor: pointer;">
+                <span data-i18n="nav_services">Hizmetlerimiz</span> <i data-lucide="chevron-down"></i>
+            </summary>
+            <div style="padding-left: 1rem; border-left: 2px solid var(--color-primary); margin-left: 1rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="ombre.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_ombre">Ombre</a>
+                <a href="sombre.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_sombre">Sombre</a>
+                <a href="kaynak.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_extensions">Kaynak Saç</a>
+                <a href="brazilian-blow.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_brazilian">Brazilian Blow</a>
+                <a href="kesim.html" class="mobile-link" style="font-size: 1.1rem;" data-i18n="service_haircut">Kesim</a>
+            </div>
+        </details>
+        <a href="#detaylar" class="mobile-link" data-i18n="nav_about">Hakkımızda</a>
+        <a href="#sonuclar" class="mobile-link" data-i18n="nav_results">Sonuçlar</a>
+        <a href="https://www.instagram.com/salonrujkayseri/" class="mobile-link" target="_blank"
+            style="color: #E1306C;"><i data-lucide="instagram"
+                style="margin-right:0.5rem; vertical-align:middle;"></i>Instagram</a>
+        <a href="https://wa.me/905541967090" class="btn btn-whatsapp mobile-btn" target="_blank"
+            style="margin-top: 1rem;">
+            <i data-lucide="message-circle"></i> <span data-i18n="btn_whatsapp">WhatsApp'tan Yazın</span>
+        </a>
+        <div style="margin-top: 1.5rem; padding-left: 1.5rem;">
+            <select id="mobile-lang-select" class="lang-select" style="padding: 0.5rem; border-radius: 5px; border: 1px solid var(--color-primary); background: transparent; color: var(--color-text); font-family: 'Inter', sans-serif; cursor: pointer; outline: none;">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hizmet" style="margin-top: 5rem;">
+        <div class="hero-bg">
+            <img src="assets/hero.png" alt="" class="hero-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container hero-container animate-on-scroll">
+            <span class="badge" data-i18n="hero_badge">Özel Koleksiyon</span>
+            <h1 class="hero-title" data-i18n="hero_title">İmza Renkler <span class="fancy-amp">&</span><br>Premium Bakım</h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">Saçınızdaki istenmeyen yansımalardan kurtulun, size özel tasarlanmış mükemmel ve doğal renk geçişlerini keşfedin.</p>
+            <div class="hero-actions">
+                <a href="#detaylar" class="btn btn-primary btn-lg" data-i18n="hero_btn_details">Detayları İncele</a>
+                <a href="https://wa.me/905541967090" class="btn btn-whatsapp" target="_blank">
+                    <i data-lucide="message-circle"></i>
+                    <span data-i18n="btn_whatsapp">WhatsApp'tan Yazın</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Details Section -->
+    <section class="details container section-padding" id="detaylar">
+        <div class="details-grid">
+            <div class="details-content animate-on-scroll">
+                <span class="badge" style="background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); margin-bottom: 1rem; padding: 0.4rem 1rem; font-size: 0.8rem;" data-i18n="about_badge">SALON RUJ HAİR SALON</span>
+                <h2 class="section-title" data-i18n="about_title">Hakkımızda</h2>
+                <div class="divider"></div>
+                <p data-i18n="about_p1">RUJ Kuaför Salonu'ndaki personelimiz ve yönetimimiz, sıcak ve samimi, aile odaklı bir ortamda mümkün olan en yüksek profesyonel saç bakımı ve hizmetini sunmak için çalışmaktadır. Müşterilerimizin mesleğimizdeki en değerli kişiler olduğuna inanıyoruz. Tüm müşterilerimize saygıyla davranıyoruz ve her zaman genel beklentilerini aşmaya çalışıyoruz.</p>
+                <p data-i18n="about_p2">Dürüstlük ve bütünlükle, müşterilerimize en iyi bakımı sunuyoruz. <strong>KAYSERİ</strong> konumunda bulunan RUJ Kuaför Salonu, "sıradan bir salon"dan çok daha fazlasıdır. İlk günden itibaren tam hizmet, bilimsel yaklaşım ve tamamen doğal görünüm konseptine kendimizi adadık.</p>
+                <p data-i18n="about_p3">Bireylerin bir araya gelip yaratıcı ve zihinsel olarak bir ekip olarak çalıştığı bir yerdir. Bu ekip yaklaşımı bizi diğer salonlardan ayıran şeydir. Rahat, tam hizmet veren bir kuaför salonu olmaktan gurur duyuyoruz. Başarımızı hayata, mesleğimize ve müşterilerimize karşı olumlu tutumlarımıza dayandırıyoruz.</p>
+            </div>
+
+            <div class="details-card-wrapper animate-on-scroll">
+                <div class="info-card">
+                    <img src="assets/detail.png" alt="Salon Ruj" class="info-card-img" style="height: 550px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Placeholder Section -->
+    <section class="gallery section-padding bg-light" id="sonuclar">
+        <div class="container animate-on-scroll">
+            <div class="section-heading text-center">
+                <h2 class="section-title" data-i18n="gallery_title">Gerçek Sonuçlar</h2>
+                <div class="divider center"></div>
+                <p data-i18n="gallery_subtitle">Salonumuzdan mutlu ayrılan misafirlerimizin değişimi.</p>
+            </div>
+
+            <div class="horizontal-gallery dynamic-gallery-container" data-category="all">
+                <!-- JS tarafından doldurulacak -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Feed Section -->
+    <section class="instagram-feed section-padding bg-light" style="padding-top: 0;">
+        <div class="container animate-on-scroll">
+            <div class="section-heading text-center" style="margin-bottom: 2rem;">
+                <h2 class="section-title" style="font-size: 2rem;" data-i18n="ig_title">Instagram'da Biz</h2>
+                <div class="divider center"></div>
+                <p><span data-i18n="ig_subtitle">En güncel tasarımlarımız için bizi takip edin</span> <a href="https://www.instagram.com/salonrujkayseri/" target="_blank" style="color: #E1306C; font-weight: 600;">@salonrujkayseri</a></p>
+            </div>
+            
+            <!-- Widget Container -->
+            <div class="ig-widget-container" style="width: 100%; max-width: 1200px; margin: 0 auto; padding-top: 1rem;">
+                <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+                <script src="https://elfsightcdn.com/platform.js" async></script>
+                <div class="elfsight-app-3c458e52-5dce-484c-a122-17b3ea792dd4" data-elfsight-app-lazy></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section-padding" id="iletisim">
+        <div class="container text-center animate-on-scroll" style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title" data-i18n="contact_title">Bizimle İletişime Geçin</h2>
+            <div class="divider center"></div>
+            <p data-i18n="contact_subtitle">Hizmetlerimiz hakkında daha fazla bilgi almak, rezervasyon yapmak veya salonumuzu ziyaret etmek için iletişim kanallarımızdan bize her zaman ulaşabilirsiniz.</p>
+
+            <div class="info-blocks"
+                style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; flex-wrap: wrap;">
+                
+                <div class="info-block" style="flex-direction: column; align-items: center; text-align: center;">
+                    <i data-lucide="map-pin" style="color: var(--color-primary); margin-bottom: 1rem;"></i>
+                    <div>
+                        <h4 data-i18n="contact_loc_title" style="margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Şubelerimiz</h4>
+                        <div style="display: flex; gap: 2rem; text-align: left;">
+                            <div>
+                                <strong data-i18n="contact_loc_1" style="display: block; font-size: 0.9rem;">Merkez Şube</strong>
+                                <p data-i18n="contact_loc_1_desc" style="font-size: 0.85rem; color: var(--color-text-muted);">Kayseri (Merkez)</p>
+                            </div>
+                            <div>
+                                <strong data-i18n="contact_loc_2" style="display: block; font-size: 0.9rem;">Talas Şube</strong>
+                                <p data-i18n="contact_loc_2_desc" style="font-size: 0.85rem; color: var(--color-text-muted);">Atatürk Blv. 91C, Talas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-block" style="flex-direction: column; align-items: center; text-align: center;">
+                    <i data-lucide="phone" style="color: var(--color-primary); margin-bottom: 1rem;"></i>
+                    <div>
+                        <h4 data-i18n="contact_phone_title" style="margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Telefon</h4>
+                        <p style="font-size: 1.1rem; font-weight: 600;"><a href="tel:+905541967090" style="color: var(--color-text-main);">+90 554 196 70 90</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://wa.me/905541967090" class="btn btn-whatsapp" target="_blank">
+                    <i data-lucide="message-circle"></i> <span data-i18n="btn_whatsapp">WhatsApp</span>
+                </a>
+                <a href="https://www.instagram.com/salonrujkayseri/" class="btn btn-outline" target="_blank"
+                    style="color: #E1306C; border-color: #E1306C;">
+                    <i data-lucide="instagram"></i> Instagram
+                </a>
+                <a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjQ1biDtf2TAxUAAAAAHQAAAAAQCw..i&pvq=Cg0vZy8xMXk0MHhkZGJtIg8KCXNhbG9uIHJ1ahACGAM&lqi=CglzYWxvbiBydWpI0-KYjpC9gIAIWhMQABABGAAYASIJc2Fsb24gcnVqkgESdW5pc2V4X2hhaXJkcmVzc2Vy&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=tr&sa=X&ftid=0x152b13939d2d1d6d:0xcdcc40282163a873"
+                    class="btn btn-outline" target="_blank">
+                    <i data-lucide="map-pin"></i> <span data-i18n="btn_directions_center">Merkez Şube</span>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Salon+Ruj+Talas+Atatürk+Bulvarı+91C"
+                    class="btn btn-outline" target="_blank">
+                    <i data-lucide="map-pin"></i> <span data-i18n="btn_directions_talas">Talas Şube</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="custom-logo" style="margin-bottom: 1.5rem;">
+                <div class="logo-top" style="color: #fff;">SALON<span
+                        style="color: #ffffff; margin-left:8px;">RU</span><span class="logo-j"
+                        style="color: #ffffff;">J</span></div>
+                <div class="logo-bottom">
+                    <span class="logo-line" style="background-color: #fff;"></span>
+                    <span class="logo-subtitle" style="color: #fff;">saç <span class="fancy-amp">&</span> sanat</span>
+                    <span class="logo-line" style="background-color: #fff;"></span>
+                </div>
+            </div>
+            <p><a href="admin.html" style="color: inherit; text-decoration: none; cursor: default;" title="">© 2026</a> <span data-i18n="footer_rights">SALON RUJ - Tüm hakları saklıdır.</span></p>
+        </div>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
