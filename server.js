@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Admin şifresi (İleride değiştirilebilir)
-const ADMIN_USERNAME = "görkem";
+const ADMIN_USERNAME = "gorkem";
 const ADMIN_PASSWORD = "123454321";
 
 app.use(helmet({
