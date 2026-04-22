@@ -90,6 +90,9 @@
             <input type="file" id="fileInput" accept="image/*,video/mp4,video/quicktime" />
             <br/>
             <button onclick="uploadMedia()" id="btnUpload">Yükle</button>
+            <div id="progressContainer" style="display:none; width:100%; background:#eee; height:10px; border-radius:5px; margin-top:1rem; overflow:hidden;">
+                <div id="progressBar" style="width:0%; height:100%; background:var(--color-primary); transition: width 0.1s;"></div>
+            </div>
             <p id="uploadMsg" style="color:green; display:none;"></p>
         </div>
 
@@ -342,7 +345,7 @@
         lucide.createIcons();
     }
 
-    async function uploadMedia() {
+    function uploadMedia() {
         const fileInput = document.getElementById('fileInput');
         const catSelect = document.getElementById('uploadCategory');
         
@@ -352,35 +355,54 @@
         }
 
         const btn = document.getElementById('btnUpload');
-        btn.innerText = "Yükleniyor...";
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        
+        btn.innerText = "Hazırlanıyor...";
         btn.disabled = true;
+        progressContainer.style.display = 'block';
+        progressBar.style.width = '0%';
 
         const formData = new FormData();
         formData.append("file", fileInput.files[0]);
         formData.append("category", catSelect.value);
 
-        try {
-            const res = await fetch(`/api/upload?u=${authUser}&p=${authToken}`, {
-                method: 'POST',
-                body: formData
-            });
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/api/upload?u=${authUser}&p=${authToken}`, true);
 
-            if(res.ok) {
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                const percent = (e.loaded / e.total) * 100;
+                progressBar.style.width = percent + '%';
+                btn.innerText = "Yükleniyor %" + Math.round(percent);
+            }
+        };
+
+        xhr.onload = function() {
+            btn.disabled = false;
+            btn.innerText = "Yükle";
+            progressContainer.style.display = 'none';
+
+            if (xhr.status === 200) {
                 document.getElementById('uploadMsg').innerText = "Başarıyla eklendi!";
                 document.getElementById('uploadMsg').style.display = 'block';
                 fileInput.value = "";
                 setTimeout(() => { document.getElementById('uploadMsg').style.display = 'none'; }, 3000);
                 loadGallery();
             } else {
-                alert("Yükleme reddedildi. Şifre süresi dolmuş olabilir.");
-                logout();
+                alert("Yükleme başarısız oldu. Dosya çok büyük olabilir veya giriş yetkiniz dolmuş olabilir.");
+                if(xhr.status === 401) logout();
             }
-        } catch(e) {
-            alert("Bir hata oluştu");
-        } finally {
-            btn.innerText = "Yükle";
+        };
+
+        xhr.onerror = function() {
+            alert("Bir ağ hatası oluştu.");
             btn.disabled = false;
-        }
+            btn.innerText = "Yükle";
+            progressContainer.style.display = 'none';
+        };
+
+        xhr.send(formData);
     }
 
     async function deleteMedia(id) {
