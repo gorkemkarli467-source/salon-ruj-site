@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli | Salon Ruj</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --color-bg: #FAF9F6; --color-primary: #a89471; --color-text: #333; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--color-bg); color: var(--color-text); margin: 0; padding: 1rem; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        
+        /* Login */
+        .login-box { text-align: center; margin-top: 3rem; padding: 0 1rem; }
+        input[type="text"], input[type="password"] { padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 100%; max-width: 300px; }
+        button { background: var(--color-primary); color: #fff; border: none; padding: 0.8rem 1.5rem; font-size: 1rem; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #8e7a5b; }
+        
+        .dashboard { display: none; }
+        
+        /* Upload */
+        .upload-area { border: 2px dashed #ccc; padding: 1.5rem 1rem; text-align: center; margin-bottom: 1.5rem; border-radius: 8px; background: #fafafa; }
+        select, input[type="file"] { margin: 0.75rem 0; padding: 0.5rem; max-width: 100%; }
+        
+        /* Gallery */
+        .admin-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; }
+        .admin-item { position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #000; }
+        .admin-item img, .admin-item video { width: 100%; height: 130px; object-fit: cover; display: block; opacity: 0.8; }
+        .btn-delete { position: absolute; top: 5px; right: 5px; background: #E1306C; padding: 0.4rem; font-size: 0.8rem; color: #fff; border-radius: 50%; width: 30px; height: 30px; display:flex; align-items:center; justify-content:center; }
+        .btn-delete:hover { background: #b82255; }
+        .tag { position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.6); color: #fff; padding: 0.2rem 0.4rem; font-size: 0.65rem; border-radius: 4px; }
+        
+        .loading { text-align: center; padding: 2rem; display: none; }
+
+        /* Text editor */
+        #translationEditor textarea { font-size: 0.9rem; }
+
+        @media (max-width: 480px) {
+            body { padding: 0.5rem; }
+            .container { padding: 1rem; border-radius: 6px; }
+            .admin-gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .admin-item img, .admin-item video { height: 100px; }
+            button { font-size: 0.9rem; padding: 0.7rem 1.2rem; }
+            .header div { flex-wrap: wrap; gap: 0.5rem !important; justify-content: center !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loginSection" class="login-box">
+    <h2 style="margin-bottom: 0.5rem;">Salon Ruj Yönetim Paneli</h2>
+    <p style="color: #666; margin-bottom: 2rem;">Lütfen giriş bilgilerinizi yazın.</p>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+        <input type="text" id="adminUser" placeholder="Kullanıcı Adı..." style="padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 250px;" />
+        <input type="password" id="adminPwd" placeholder="Şifreniz..." style="padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 250px;" />
+    </div>
+    <button onclick="login()" style="width: 250px;">Giriş Yap</button>
+    <p id="loginError" style="color: red; display: none; margin-top: 1rem;">Hatalı giriş bilgisi!</p>
+</div>
+
+<div id="dashboardSection" class="container dashboard">
+    <div class="header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <div style="display:flex; gap:0.75rem;">
+            <button onclick="showTab('media')" id="tabMedia" style="background: var(--color-primary);">📷 Medya</button>
+            <button onclick="showTab('text')" id="tabText" style="background: #555;">✏️ Metinler</button>
+        </div>
+        <button onclick="logout()" style="background:#555; font-size:0.8rem; padding: 0.5rem 1rem;">Çıkış Yap</button>
+    </div>
+
+    <div id="mediaSection">
+        <div class="upload-area">
+            <i data-lucide="upload-cloud" style="width:48px; height:48px; color:#a89471;"></i>
+            <h3>Yeni Medya Yükle</h3>
+            
+            <div>
+                <label><strong>Kategori Seçin:</strong></label><br/>
+                <select id="uploadCategory" style="font-size:1rem; padding: 0.5rem;">
+                    <option value="all">Ana Sayfa (Ortak Havuz)</option>
+                    <option value="ombre">Ombre</option>
+                    <option value="sombre">Sombre</option>
+                    <option value="kaynak">Kaynak Saç</option>
+                    <option value="brazilian">Brazilian Blow</option>
+                    <option value="kesim">Kesim</option>
+                </select>
+            </div>
+            
+            <input type="file" id="fileInput" accept="image/*,video/mp4,video/quicktime" />
+            <br/>
+            <button onclick="uploadMedia()" id="btnUpload">Yükle</button>
+            <p id="uploadMsg" style="color:green; display:none;"></p>
+        </div>
+
+        <div class="header" style="border-bottom:none;">
+            <h2>Sistemde Kayıtlı Medyalar</h2>
+        </div>
+
+        <div class="loading" id="loadingDiv">Yükleniyor...</div>
+        <div class="admin-gallery" id="adminGallery">
+            <!-- JS ile dolacak -->
+        </div>
+    </div>
+
+    <div id="textSection" style="display: none;">
+        <div class="header" style="border-bottom:none;">
+            <h2>Site Metinlerini Düzenle</h2>
+        </div>
+
+        <div style="margin-bottom: 1rem; text-align: center;">
+            <label><strong>Dil Seçin:</strong></label>
+            <select id="editLangSelect" onchange="loadTranslationsToEditor()" style="padding: 0.5rem; border-radius: 4px;">
+                <option value="tr">Türkçe (TR)</option>
+                <option value="en">English (EN)</option>
+                <option value="de">Deutsch (DE)</option>
+                <option value="ru">Русский (RU)</option>
+            </select>
+        </div>
+
+        <div id="translationEditor" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+            <!-- Dinamik olarak dolacak -->
+        </div>
+
+        <div style="text-align: center; sticky; bottom: 20px;">
+            <button onclick="saveAllTranslations()" id="btnSaveTexts" style="padding: 1rem 3rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">Tüm Değişiklikleri Kaydet</button>
+            <p id="saveMsg" style="color:green; display:none; margin-top: 1rem;">Metinler başarıyla kaydedildi!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+    let authToken = localStorage.getItem('salon_admin_token') || "";
+    let authUser = localStorage.getItem('salon_admin_user') || "";
+
+    let translationsData = null;
+
+    if(authToken && authUser) {
+        checkTokenDirectly();
+    }
+
+    function showTab(tab) {
+        if(tab === 'media') {
+            document.getElementById('mediaSection').style.display = 'block';
+            document.getElementById('textSection').style.display = 'none';
+            document.getElementById('tabMedia').style.background = 'var(--color-primary)';
+            document.getElementById('tabText').style.background = '#555';
+        } else {
+            document.getElementById('mediaSection').style.display = 'none';
+            document.getElementById('textSection').style.display = 'block';
+            document.getElementById('tabMedia').style.background = '#555';
+            document.getElementById('tabText').style.background = 'var(--color-primary)';
+            if(!translationsData) fetchTranslations();
+        }
+    }
+
+    async function fetchTranslations() {
+        const res = await fetch('/api/translations');
+        translationsData = await res.json();
+        loadTranslationsToEditor();
+    }
+
+    // Türkçe etiket haritası
+    const keyLabels = {
+        nav_services: "Menü: Hizmetlerimiz", nav_about: "Menü: Hakkımızda",
+        nav_results: "Menü: Sonuçlar", nav_contact: "Menü: İletişim",
+        service_ombre: "Menü: Ombre", service_sombre: "Menü: Sombre",
+        service_extensions: "Menü: Kaynak Saç", service_brazilian: "Menü: Brazilian Blow",
+        service_haircut: "Menü: Kesim",
+        hero_badge: "Ana Sayfa: Rozet", hero_title: "Ana Sayfa: Başlık",
+        hero_subtitle: "Ana Sayfa: Alt Başlık", hero_btn_details: "Ana Sayfa: Detay Butonu",
+        about_badge: "Hakkımızda: Rozet", about_title: "Hakkımızda: Başlık",
+        about_p1: "Hakkımızda: 1. Paragraf", about_p2: "Hakkımızda: 2. Paragraf",
+        about_p3: "Hakkımızda: 3. Paragraf",
+        gallery_title: "Galeri: Başlık", gallery_subtitle: "Galeri: Alt Başlık",
+        gallery_empty: "Galeri: Boş Mesajı",
+        ig_title: "Instagram: Başlık", ig_subtitle: "Instagram: Alt Başlık",
+        contact_title: "İletişim: Başlık", contact_subtitle: "İletişim: Alt Başlık",
+        contact_loc_title: "İletişim: Konum Başlığı", contact_loc_desc: "İletişim: Konum Açıklaması",
+        contact_phone_title: "İletişim: Telefon Başlığı",
+        btn_whatsapp: "Buton: WhatsApp", btn_directions: "Buton: Yol Tarifi",
+        btn_appointment: "Buton: Randevu Al", service_badge: "Hizmet Rozeti",
+        footer_rights: "Footer: Telif Hakkı",
+        ombre_title: "Ombre Sayfası: Başlık", ombre_p1: "Ombre Sayfası: 1. Paragraf",
+        ombre_p2: "Ombre Sayfası: 2. Paragraf", ombre_gallery: "Ombre: Galeri Başlığı",
+        btn_ombre_apt: "Ombre: Randevu Butonu",
+        sombre_title: "Sombre Sayfası: Başlık", sombre_p1: "Sombre Sayfası: 1. Paragraf",
+        sombre_p2: "Sombre Sayfası: 2. Paragraf", sombre_gallery: "Sombre: Galeri Başlığı",
+        btn_sombre_apt: "Sombre: Randevu Butonu",
+        kaynak_title: "Kaynak Saç: Başlık", kaynak_h1: "Kaynak Saç: Alt Başlık 1",
+        kaynak_p1: "Kaynak Saç: 1. Paragraf", kaynak_h2: "Kaynak Saç: Alt Başlık 2",
+        kaynak_p2: "Kaynak Saç: 2. Paragraf", kaynak_li1: "Kaynak Saç: Liste 1",
+        kaynak_li2: "Kaynak Saç: Liste 2", kaynak_li3: "Kaynak Saç: Liste 3",
+        kaynak_h3: "Kaynak Saç: Alt Başlık 3", kaynak_p3: "Kaynak Saç: 3. Paragraf",
+        kaynak_h4: "Kaynak Saç: Alt Başlık 4", kaynak_p4: "Kaynak Saç: 4. Paragraf",
+        kaynak_gallery: "Kaynak Saç: Galeri Başlığı", btn_kaynak_apt: "Kaynak Saç: Randevu Butonu",
+        bb_title: "Brazilian Blow: Başlık", bb_h1: "Brazilian Blow: Alt Başlık 1",
+        bb_p1: "Brazilian Blow: 1. Paragraf", bb_p2: "Brazilian Blow: 2. Paragraf",
+        bb_h2: "Brazilian Blow: Alt Başlık 2", bb_p3: "Brazilian Blow: 3. Paragraf",
+        bb_gallery: "Brazilian Blow: Galeri Başlığı",
+        kesim_title: "Kesim Sayfası: Başlık", kesim_p1: "Kesim Sayfası: 1. Paragraf",
+        kesim_h1: "Kesim Sayfası: Alt Başlık 1", kesim_p2: "Kesim Sayfası: 2. Paragraf",
+        kesim_li1: "Kesim Sayfası: Liste 1", kesim_li2: "Kesim Sayfası: Liste 2",
+        kesim_gallery: "Kesim Sayfası: Galeri Başlığı"
+    };
+
+    function loadTranslationsToEditor() {
+        if(!translationsData) return;
+        const lang = document.getElementById('editLangSelect').value;
+        const editor = document.getElementById('translationEditor');
+        const dict = translationsData[lang];
+        if(!dict) { editor.innerHTML = '<p style="color:red">Bu dil verisi bulunamadı.</p>'; return; }
+
+        editor.innerHTML = '';
+
+        for (const [key, value] of Object.entries(dict)) {
+            const row = document.createElement('div');
+            row.style.cssText = 'display:flex; flex-direction:column; gap:0.25rem;';
+
+            const label = document.createElement('label');
+            label.style.cssText = 'font-size:0.78rem; color:#888; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;';
+            label.textContent = keyLabels[key] || key;
+
+            const ta = document.createElement('textarea');
+            ta.setAttribute('data-key', key);
+            ta.style.cssText = 'width:100%; padding:0.6rem; border:1px solid #e0e0e0; border-radius:6px; font-family:inherit; font-size:0.95rem; min-height:56px; resize:vertical; box-sizing:border-box; transition:border 0.2s;';
+            ta.value = value; // .value kullan, innerHTML değil — HTML karakterleri korunur
+            ta.addEventListener('focus', () => ta.style.borderColor = 'var(--color-primary)');
+            ta.addEventListener('blur',  () => ta.style.borderColor = '#e0e0e0');
+
+            row.appendChild(label);
+            row.appendChild(ta);
+            editor.appendChild(row);
+        }
+    }
+
+    async function saveAllTranslations() {
+        const lang = document.getElementById('editLangSelect').value;
+        const textareas = document.querySelectorAll('#translationEditor textarea');
+        
+        textareas.forEach(ta => {
+            const key = ta.getAttribute('data-key');
+            translationsData[lang][key] = ta.value;
+        });
+
+        const btn = document.getElementById('btnSaveTexts');
+        btn.innerText = "Kaydediliyor...";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/translations', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-password': authToken, 
+                    'x-admin-username': authUser 
+                },
+                body: JSON.stringify(translationsData)
+            });
+
+            if(res.ok) {
+                document.getElementById('saveMsg').style.display = 'block';
+                setTimeout(() => { document.getElementById('saveMsg').style.display = 'none'; }, 3000);
+            } else {
+                alert("Kaydedilemedi. Lütfen tekrar giriş yapın.");
+                logout();
+            }
+        } catch(e) {
+            alert("Bir hata oluştu");
+        } finally {
+            btn.innerText = "Tüm Değişiklikleri Kaydet";
+            btn.disabled = false;
+        }
+    }
+
+    async function checkTokenDirectly() {
+        showDashboard();
+        loadGallery();
+    }
+
+    async function login() {
+        const user = document.getElementById('adminUser').value;
+        const pwd = document.getElementById('adminPwd').value;
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ username: user, password: pwd })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            authUser = user;
+            authToken = pwd;
+            localStorage.setItem('salon_admin_user', authUser);
+            localStorage.setItem('salon_admin_token', authToken);
+            document.getElementById('loginError').style.display = 'none';
+            showDashboard();
+            loadGallery();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    function logout() {
+        authToken = "";
+        authUser = "";
+        localStorage.removeItem('salon_admin_token');
+        localStorage.removeItem('salon_admin_user');
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('dashboardSection').style.display = 'none';
+    }
+
+    function showDashboard() {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').style.display = 'block';
+    }
+
+    async function loadGallery() {
+        const galleryDiv = document.getElementById('adminGallery');
+        document.getElementById('loadingDiv').style.display = 'block';
+        galleryDiv.innerHTML = "";
+
+        const res = await fetch('/api/gallery');
+        const items = await res.json();
+
+        document.getElementById('loadingDiv').style.display = 'none';
+
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'admin-item';
+            
+            let mediaTag = item.type === 'video' 
+                ? `<video src="/assets/uploads/${item.filename}" muted loop></video>`
+                : `<img src="/assets/uploads/${item.filename}" />`;
+
+            card.innerHTML = `
+                ${mediaTag}
+                <div class="tag">${item.category.toUpperCase()}</div>
+                <button class="btn-delete" onclick="deleteMedia('${item.id}')"><i data-lucide="trash-2" style="width:14px;"></i></button>
+            `;
+            galleryDiv.appendChild(card);
+        });
+        lucide.createIcons();
+    }
+
+    async function uploadMedia() {
+        const fileInput = document.getElementById('fileInput');
+        const catSelect = document.getElementById('uploadCategory');
+        
+        if (fileInput.files.length === 0) {
+            alert("Lütfen bir dosya seçin");
+            return;
+        }
+
+        const btn = document.getElementById('btnUpload');
+        btn.innerText = "Yükleniyor...";
+        btn.disabled = true;
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("category", catSelect.value);
+
+        try {
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                headers: { 'x-admin-password': authToken, 'x-admin-username': authUser },
+                body: formData
+            });
+
+            if(res.ok) {
+                document.getElementById('uploadMsg').innerText = "Başarıyla eklendi!";
+                document.getElementById('uploadMsg').style.display = 'block';
+                fileInput.value = "";
+                setTimeout(() => { document.getElementById('uploadMsg').style.display = 'none'; }, 3000);
+                loadGallery();
+            } else {
+                alert("Yükleme reddedildi. Şifre süresi dolmuş olabilir.");
+                logout();
+            }
+        } catch(e) {
+            alert("Bir hata oluştu");
+        } finally {
+            btn.innerText = "Yükle";
+            btn.disabled = false;
+        }
+    }
+
+    async function deleteMedia(id) {
+        if(!confirm("Kalıcı olarak silmek istediğinize emin misiniz?")) return;
+
+        const res = await fetch(`/api/gallery/${id}`, {
+            method: 'DELETE',
+            headers: { 'x-admin-password': authToken, 'x-admin-username': authUser }
+        });
+
+        if (res.ok) {
+            loadGallery();
+        } else {
+            alert("Silinemedi. Lütfen tekrar giriş yapın.");
+            logout();
+        }
+    }
+</script>
+</body>
+</html>
