@@ -92,14 +92,16 @@ function saveTranslations(data) {
 
 // Şifre kontrol middleware
 function checkAuth(req, res, next) {
-    const user = req.headers['x-admin-username'];
-    const pwd = req.headers['x-admin-password'];
+    const user = req.headers['x-admin-username'] || req.query.u;
+    const pwd = req.headers['x-admin-password'] || req.query.p;
+    
     if (user === ADMIN_USERNAME && pwd === ADMIN_PASSWORD) {
         next();
     } else {
-        res.status(401).json({ error: 'Yetkisiz erişim. Hatalı şifre veya kullanıcı adı.' });
+        res.status(401).json({ error: 'Yetkisiz erişim.' });
     }
 }
+
 
 // --- API ENDPOINT'LERİ ---
 
