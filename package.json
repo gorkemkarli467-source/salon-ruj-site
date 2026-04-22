@@ -1,0 +1,16 @@
+{
+  "name": "salon-ruj",
+  "version": "1.0.0",
+  "description": "Salon Ruj Premium Hair Salon Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.2",
+    "helmet": "^8.1.0",
+    "multer": "^2.1.1"
+  }
+}
