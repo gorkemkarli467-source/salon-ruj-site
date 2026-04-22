@@ -249,12 +249,10 @@
         btn.disabled = true;
 
         try {
-            const res = await fetch('/api/translations', {
+            const res = await fetch(`/api/translations?u=${authUser}&p=${authToken}`, {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'x-admin-password': authToken, 
-                    'x-admin-username': authUser 
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(translationsData)
             });
@@ -362,9 +360,8 @@
         formData.append("category", catSelect.value);
 
         try {
-            const res = await fetch('/api/upload', {
+            const res = await fetch(`/api/upload?u=${authUser}&p=${authToken}`, {
                 method: 'POST',
-                headers: { 'x-admin-password': authToken, 'x-admin-username': authUser },
                 body: formData
             });
 
@@ -389,9 +386,8 @@
     async function deleteMedia(id) {
         if(!confirm("Kalıcı olarak silmek istediğinize emin misiniz?")) return;
 
-        const res = await fetch(`/api/gallery/${id}`, {
-            method: 'DELETE',
-            headers: { 'x-admin-password': authToken, 'x-admin-username': authUser }
+        const res = await fetch(`/api/gallery/${id}?u=${authUser}&p=${authToken}`, {
+            method: 'DELETE'
         });
 
         if (res.ok) {
